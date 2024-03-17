@@ -1,9 +1,11 @@
 import React from 'react';
+import PageNav from "../components/PageNav.jsx";
 
 function Product(props) {
     return (
         <div>
-            Products
+            <PageNav />
+            <h1>Products</h1>
         </div>
     );
 }
