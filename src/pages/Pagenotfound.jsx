@@ -1,5 +1,5 @@
 import React from 'react';
-import PageNav from "../components/PageNav.jsx";
+import PageNav from "../components/pageNav/PageNav.jsx";
 
 function Pagenotfound(props) {
     return (
