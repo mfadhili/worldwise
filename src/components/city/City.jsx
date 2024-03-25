@@ -1,4 +1,5 @@
 import styles from "./City.module.css";
+import {useParams} from "react-router-dom";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -16,6 +17,9 @@ function City() {
     date: "2027-10-31T15:59:59.138Z",
     notes: "My favorite city so far!",
   };
+
+  const x = useParams(); // GETS THE PARAMETER USING THE GIVEN PARAMETER NAME
+  console.log(x);
 
   const { cityName, emoji, date, notes } = currentCity;
 
