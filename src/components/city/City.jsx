@@ -1,5 +1,5 @@
 import styles from "./City.module.css";
-import {useParams} from "react-router-dom";
+import {useParams, useSearchParams} from "react-router-dom";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -18,8 +18,11 @@ function City() {
     notes: "My favorite city so far!",
   };
 
-  const x = useParams(); // GETS THE PARAMETER USING THE GIVEN PARAMETER NAME
-  console.log(x);
+  const id = useParams(); // GETS THE PARAMETER USING THE GIVEN PARAMETER NAME
+  // console.log(id);
+  const [searchParams,setSearchParams] = useSearchParams() // LIKE A STATE HOOK, BUT GRABS PARAMS
+  const lat = searchParams.get("lat");
+  const lng = searchParams.get("lng");
 
   const { cityName, emoji, date, notes } = currentCity;
 
