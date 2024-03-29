@@ -1,5 +1,6 @@
 import styles from "./City.module.css";
 import {useParams, useSearchParams} from "react-router-dom";
+import BackButton from "../button/BackButton.jsx";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -59,7 +60,7 @@ function City() {
       </div>
 
       <div>
-        <ButtonBack />
+        <BackButton />
       </div>
     </div>
   );
