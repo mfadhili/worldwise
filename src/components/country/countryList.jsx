@@ -6,7 +6,7 @@ import CountryItem from "./CountryItem.jsx";
 import {useCities} from "../../contexts/CitiesContext.jsx";
 
 function CountryList() {
-    const {cities, isLoading} = useCities()
+    const {cities, isLoading } = useCities()
     if (isLoading) {
         return (
             <Spinner />
