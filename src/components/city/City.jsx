@@ -1,6 +1,7 @@
 import styles from "./City.module.css";
 import {useParams, useSearchParams} from "react-router-dom";
 import BackButton from "../button/BackButton.jsx";
+import {useState} from "react";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -11,23 +12,21 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
 function City() {
-  // TEMP DATA
-  const currentCity = {
-    cityName: "Lisbon",
-    emoji: "🇵🇹",
-    date: "2027-10-31T15:59:59.138Z",
-    notes: "My favorite city so far!",
-  };
+      // TEMP DATA
+      /*const currentCity = {
+        cityName: "Lisbon",
+        emoji: "🇵🇹",
+        date: "2027-10-31T15:59:59.138Z",
+        notes: "My favorite city so far!",
+      }*/;
 
-  const id = useParams(); // GETS THE PARAMETER USING THE GIVEN PARAMETER NAME
-  // console.log(id);
-  const [searchParams,setSearchParams] = useSearchParams() // LIKE A STATE HOOK, BUT GRABS PARAMS
-  const lat = searchParams.get("lat");
-  const lng = searchParams.get("lng");
+    const id = useParams(); // GETS THE PARAMETER USING THE GIVEN PARAMETER NAME
+    // console.log(id);
+    const [searchParams,setSearchParams] = useSearchParams() // LIKE A STATE HOOK, BUT GRABS PARAMS
 
-  const { cityName, emoji, date, notes } = currentCity;
+    const { cityName, emoji, date, notes } = currentCity;
 
-  return (
+    return (
     <div className={styles.city}>
       <div className={styles.row}>
         <h6>City name</h6>
