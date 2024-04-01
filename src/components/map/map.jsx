@@ -34,9 +34,10 @@ function Map() {
 
     return (
         <div className={styles.mapContainer} >
-            <Button type={'position'} onClick={getPosition} >
-                {isLoadingPosition ? "Loading...": "Use you position"}
-            </Button>
+            {!geolocationPosition &&
+                (<Button type={'position'} onClick={getPosition}>
+                {isLoadingPosition ? "Loading..." : "Use you position"}
+                </Button>)}
             <MapContainer center={mapPosition} zoom={6} scrollWheelZoom={true} className={styles.map}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
