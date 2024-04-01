@@ -24,10 +24,17 @@ function Map() {
         }
     }, [mapLng, mapLat]);
 
+    /* EFFECT TO SYNC MAP LOCATION*/
+    useEffect(() => {
+        if (geolocationPosition) {
+            setMapPosition([geolocationPosition.lat, geolocationPosition.lng])
+        }
+    }, [geolocationPosition]);
+
 
     return (
         <div className={styles.mapContainer} >
-            <Button type={'position'} onClick={getPosition}>
+            <Button type={'position'} onClick={getPosition} >
                 {isLoadingPosition ? "Loading...": "Use you position"}
             </Button>
             <MapContainer center={mapPosition} zoom={6} scrollWheelZoom={true} className={styles.map}>
