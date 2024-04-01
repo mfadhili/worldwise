@@ -16,7 +16,6 @@ import {CitiesProvider} from "./contexts/CitiesContext.jsx";
 
 function App() {
 
-
     return (
         <CitiesProvider>
             <BrowserRouter>

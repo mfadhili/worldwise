@@ -5,18 +5,17 @@ import {MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents} from "reac
 import {useCities} from "../../contexts/CitiesContext.jsx";
 import {useGeolocation} from "../../hooks/useGeolocation.js";
 import Button from "../button/button.jsx";
+import {useUrlPosition} from "../../hooks/useUrlPosition.js";
 
 function Map() {
 
     /*USE NAVIGATE HOOK*/
     // LIKE A STATE HOOK, BUT GRABS PARAMS AND CAN UPDATE QUERY STRING
-    const [searchParams,setSearchParams] = useSearchParams()
     const {cities} = useCities();
     const [mapPosition, setMapPosition] = useState([40,0])
     const {isLoading: isLoadingPosition, position: geolocationPosition, getPosition} = useGeolocation()
 
-    const mapLat = searchParams.get("lat");
-    const mapLng = searchParams.get("lng");
+    const [mapLat, mapLng] = useUrlPosition();
 
     useEffect(() => {
         if (mapLat && mapLng){
@@ -69,7 +68,7 @@ function DetectClick() {
 
     useMapEvents({
         click: e => {
-            console.log(e);
+            // console.log(e);
             navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
         },
     })

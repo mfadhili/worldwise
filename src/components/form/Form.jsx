@@ -1,10 +1,13 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
-import { useState } from "react";
+import {useEffect, useState} from "react";
 
 import styles from "./Form.module.css";
 import Button from "../button/button.jsx";
 import {useNavigate} from "react-router-dom";
+import {useUrlPosition} from "../../hooks/useUrlPosition.js";
+
+const GEOCODE_URL=`https://api.bigdatacloud.net/data/reverse-geocode-client`;
 
 export function convertToEmoji(countryCode) {
   const codePoints = countryCode
@@ -19,9 +22,28 @@ function Form() {
   const [country, setCountry] = useState("");
   const [date, setDate] = useState(new Date());
   const [notes, setNotes] = useState("");
+    const [isLoadingGeoCoding, setIsLoadingGeoCoding] = useState(false)
+
+  const [lat, lng] = useUrlPosition();
 
   /* USING NAVIGATE FOR PROGRAMMATIC NAVIGATION*/
   const navigate = useNavigate();
+
+    useEffect(() => {
+        async function fetchCityData() {
+            try {
+                setIsLoadingGeoCoding(true);
+                const res = await fetch(`${GEOCODE_URL}?latitude=${lat}&longitude=${lng}`);
+                const data = await res.json();
+                console.log(data)
+            } catch (error) {
+
+            } finally {
+                setIsLoadingGeoCoding(false)
+            }
+        }
+        fetchCityData();
+    }, [lat,lng]);
 
   return (
     <form className={styles.form}>
