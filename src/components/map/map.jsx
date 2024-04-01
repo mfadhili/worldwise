@@ -3,15 +3,18 @@ import styles from "./Map.module.css"
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents} from "react-leaflet";
 import {useCities} from "../../contexts/CitiesContext.jsx";
+import {useGeolocation} from "../../hooks/useGeolocation.js";
+import Button from "../button/button.jsx";
 
 function Map() {
 
     /*USE NAVIGATE HOOK*/
     // LIKE A STATE HOOK, BUT GRABS PARAMS AND CAN UPDATE QUERY STRING
     const [searchParams,setSearchParams] = useSearchParams()
-
     const {cities} = useCities();
     const [mapPosition, setMapPosition] = useState([40,0])
+    const {isLoading: isLoadingPosition, position: geolocationPosition, getPosition} = useGeolocation()
+
     const mapLat = searchParams.get("lat");
     const mapLng = searchParams.get("lng");
 
@@ -24,6 +27,9 @@ function Map() {
 
     return (
         <div className={styles.mapContainer} >
+            <Button type={'position'} onClick={getPosition}>
+                {isLoadingPosition ? "Loading...": "Use you position"}
+            </Button>
             <MapContainer center={mapPosition} zoom={6} scrollWheelZoom={true} className={styles.map}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
