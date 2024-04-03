@@ -83,6 +83,9 @@ import {useNavigate} from "react-router-dom";
 import {useUrlPosition} from "../../hooks/useUrlPosition.js";
 import Message from "../message/Message.jsx";
 import Spinner from "../spinner/Spinner.jsx";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 const GEOCODE_URL=`https://api.bigdatacloud.net/data/reverse-geocode-client`;
 
@@ -148,6 +151,7 @@ function Form() {
     function handleSubmit(event) {
         event.preventDefault(); // TO PREVENT HARD RELOAD OF THE PAGE
         // THE BACK BUTTON HAS PREVENT DEFAULT TO PREVENT THE DEFAULT SUBMIT WHEN CLICKED FOR BACK
+        if (!cityName)
     }
 
     return (
@@ -164,11 +168,12 @@ function Form() {
 
       <div className={styles.row}>
         <label htmlFor="date">When did you go to {cityName}?</label>
-        <input
+        {/*<input
           id="date"
           onChange={(e) => setDate(e.target.value)}
           value={date}
-        />
+        />*/}
+        <DatePicker id={"date"}  onChange={date => setDate(date)} selected={date} dateFormat={"dd/MM/yyyy"} />
       </div>
 
       <div className={styles.row}>
