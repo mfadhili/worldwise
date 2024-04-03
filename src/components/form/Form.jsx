@@ -145,8 +145,13 @@ function Form() {
         return <Message message={geocodingError} />
     }
 
-  return (
-    <form className={styles.form}>
+    function handleSubmit(event) {
+        event.preventDefault(); // TO PREVENT HARD RELOAD OF THE PAGE
+        // THE BACK BUTTON HAS PREVENT DEFAULT TO PREVENT THE DEFAULT SUBMIT WHEN CLICKED FOR BACK
+    }
+
+    return (
+    <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input
