@@ -82,6 +82,7 @@ import Button from "../button/button.jsx";
 import {useNavigate} from "react-router-dom";
 import {useUrlPosition} from "../../hooks/useUrlPosition.js";
 import Message from "../message/Message.jsx";
+import Spinner from "../spinner/Spinner.jsx";
 
 const GEOCODE_URL=`https://api.bigdatacloud.net/data/reverse-geocode-client`;
 
@@ -108,6 +109,7 @@ function Form() {
   const navigate = useNavigate();
 
     useEffect(() => {
+        if (!lat && !lng) return;
         async function fetchCityData() {
             try {
                 setIsLoadingGeoCoding(true);
@@ -130,6 +132,14 @@ function Form() {
         }
         fetchCityData();
     }, [lat,lng]);
+
+    if (isLoadingGeoCoding) {
+        return <Spinner />
+    }
+
+    if (!lat && !lng) {
+        return <Message message={"Start by clicking somewhere on the map"} />
+    }
 
     if (geocodingError) {
         return <Message message={geocodingError} />
