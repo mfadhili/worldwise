@@ -38,6 +38,11 @@ function reducer(state, action) {
                 cities: [...state.cities,action.payload],
             }
         case 'cities/deleted':
+            return {
+                ...state,
+                isLoading: false,
+                cities: state.cities.filter((city) => city.id !== action.payload),
+            }
         case 'rejected':
             return {
                 ...state,
@@ -112,7 +117,8 @@ function CitiesProvider({children})
             await fetch(`${BASE_URl}/cities/${id}`, {
                 method: 'DELETE',
             });
-            setCities((cities) => cities.filter((city) => city.id !== id));
+            // setCities((cities) => cities.filter((city) => city.id !== id));
+            dispatch({type: "cities/deleted", payload: id})
         } catch {
             // alert('There was an error deleting the data');
             dispatch({type:"rejected", payload: "There was an error deleting the data"});
