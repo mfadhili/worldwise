@@ -9,32 +9,59 @@ const initialState = {
     cities: [],
     isLoading: false,
     currentCities: {},
+    error: "",
 }
 
 function reducer(state, action) {
-
+    switch (action.type) {
+        case "loading":
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case 'cities/loaded':
+            return {
+                ...state,
+                isLoading: false,
+                cities: action.payload,
+            };
+        case 'cities/created':
+        case 'cities/deleted':
+        case 'rejected':
+            return {
+                ...state,
+                isLoading: false,
+                error: action.payload,
+            }
+        default:
+            throw new Error(`Unknown action type ${action.type}`);
+    }
 }
 
 function CitiesProvider({children})
 {
-/*    const [cities, setCities] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [currentCity, setCurrentCity] = useState({});*/
+    // const [cities, setCities] = useState([]);
+    // const [isLoading, setIsLoading] = useState(false);
+    // const [currentCity, setCurrentCity] = useState({});
 
-
+    const [{cities, isLoading,currentCity}, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
         async function fetchCities() {
+            dispatch({type:"loading"});
             try {
-                setIsLoading(true)
+                // setIsLoading(true)
                 const res = await fetch(`${BASE_URl}/cities`);
                 const data = await res.json();
-                setCities(data);
+                // setCities(data);
+                dispatch({type:"cities/loaded", payload: data});
             } catch {
-                alert('There was an error loading the data')
-            } finally {
-                setIsLoading(false)
+                // alert('There was an error loading the data')
+                dispatch({type:"rejected", payload: "There was an error loading the data"})
             }
+            // finally {
+            //     setIsLoading(false)
+            // }
         }
 
         fetchCities();
