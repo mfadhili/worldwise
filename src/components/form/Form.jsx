@@ -107,7 +107,8 @@ function Form() {
   const [emoji, setEmoji] = useState("")
   const [lat, lng] = useUrlPosition();
   const [geocodingError, setGeocodingError] = useState("");
-  const {createCities, isLoading} = useCities()
+  const {createCities, isLoading} = useCities();
+
 
 
   /* USING NAVIGATE FOR PROGRAMMATIC NAVIGATION*/
@@ -150,7 +151,7 @@ function Form() {
         return <Message message={geocodingError} />
     }
 
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         event.preventDefault(); // TO PREVENT HARD RELOAD OF THE PAGE
         // THE BACK BUTTON HAS PREVENT DEFAULT TO PREVENT THE DEFAULT SUBMIT WHEN CLICKED FOR BACK
 
@@ -168,8 +169,8 @@ function Form() {
         }
 
         // console.log(newCityData);
-        createCities(newCityData);
-        
+        await createCities(newCityData);
+        navigate('/app/cities')
     }
 
     return (
