@@ -36,12 +36,14 @@ function reducer(state, action) {
                 ...state,
                 isLoading: false,
                 cities: [...state.cities,action.payload],
+                currentCity: action.payload,
             }
         case 'cities/deleted':
             return {
                 ...state,
                 isLoading: false,
                 cities: state.cities.filter((city) => city.id !== action.payload),
+                currentCity: {},
             }
         case 'rejected':
             return {
@@ -150,9 +152,7 @@ function CitiesProvider({children})
     return (
         <CitiesContext.Provider value={{
             cities,
-            setCities,
             isLoading,
-            setIsLoading,
             currentCity,
             getCity,
             createCities,
