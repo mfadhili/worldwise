@@ -90,7 +90,9 @@ function CitiesProvider({children})
             console.log(data);
             setCities((cities) => [...cities, data])
         } catch {
-            alert('There was an error saving the data')
+            // alert('There was an error saving the data')
+            dispatch({type:"rejected", payload: "There was an error saving the data"})
+
         }
         // finally {
         //     setIsLoading(false)
@@ -106,7 +108,9 @@ function CitiesProvider({children})
             });
             setCities((cities) => cities.filter((city) => city.id !== id));
         } catch {
-            alert('There was an error deleting the data');
+            // alert('There was an error deleting the data');
+            dispatch({type:"rejected", payload: "There was an error deleting the data"});
+
         }
         // finally {
         //     setIsLoading(false);
@@ -122,7 +126,9 @@ function CitiesProvider({children})
             // setCurrentCity(data);
             dispatch({type: "city/loaded", payload: data});
         } catch {
-            alert('There was an error loading the data');
+            // alert('There was an error loading the data');
+            dispatch({type:"rejected", payload: "There was an error loading the data"});
+
         }
         // finally {
         //     setIsLoading(false);
