@@ -9,7 +9,7 @@ const initialState = {
     cities: [],
     isLoading: false,
     currentCity: {},
-    error: "",
+    errorMessage: "",
 }
 
 function reducer(state, action) {
@@ -49,7 +49,7 @@ function reducer(state, action) {
             return {
                 ...state,
                 isLoading: false,
-                error: action.payload,
+                errorMessage: action.payload,
             }
         default:
             throw new Error(`Unknown action type ${action.type}`);
@@ -62,7 +62,7 @@ function CitiesProvider({children})
     // const [isLoading, setIsLoading] = useState(false);
     // const [currentCity, setCurrentCity] = useState({});
 
-    const [{cities, isLoading,currentCity}, dispatch] = useReducer(reducer, initialState);
+    const [{cities, isLoading,currentCity, errorMessage}, dispatch] = useReducer(reducer, initialState);
 
     useEffect(() => {
         async function fetchCities() {
@@ -132,7 +132,10 @@ function CitiesProvider({children})
     }
 
   async  function getCity(id) {
-      dispatch({type: "loading"});
+        if (Number(id) === currentCity.id) {
+            return;
+        }
+        dispatch({type: "loading"});
         try {
             // setIsLoading(true);
             const res = await fetch(`${BASE_URl}/cities/${id}`);
@@ -154,6 +157,7 @@ function CitiesProvider({children})
             cities,
             isLoading,
             currentCity,
+            errorMessage,
             getCity,
             createCities,
             deleteCity
