@@ -28,13 +28,13 @@ const formatDate = (date) =>
 function CityItem({city}) {
     // console.log(city)
     const {cityName, emoji,date, id, position} = city
-    const {currentCity} = useCities()
+    const {currentCity, deleteCity} = useCities()
     // console.log(position)
 
     function handleClick(e) {
         e.preventDefault();
         console.log("Test");
-
+        deleteCity(id);
     }
     /* QUERY STRING CREATING URL THAT CAN HOLD "STATE"*/
     return (
