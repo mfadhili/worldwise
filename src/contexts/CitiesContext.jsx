@@ -32,6 +32,11 @@ function reducer(state, action) {
                 currentCity: action.payload,
             }
         case 'cities/created':
+            return {
+                ...state,
+                isLoading: false,
+                cities: [...state.cities,action.payload],
+            }
         case 'cities/deleted':
         case 'rejected':
             return {
@@ -88,7 +93,8 @@ function CitiesProvider({children})
 
             const data = await res.json();
             console.log(data);
-            setCities((cities) => [...cities, data])
+            // setCities((cities) => [...cities, data])
+            dispatch({type: "cities/created", payload:data});
         } catch {
             // alert('There was an error saving the data')
             dispatch({type:"rejected", payload: "There was an error saving the data"})
