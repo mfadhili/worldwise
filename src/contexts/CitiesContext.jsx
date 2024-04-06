@@ -8,7 +8,7 @@ const CitiesContext = createContext();
 const initialState = {
     cities: [],
     isLoading: false,
-    currentCities: {},
+    currentCity: {},
     error: "",
 }
 
@@ -25,6 +25,12 @@ function reducer(state, action) {
                 isLoading: false,
                 cities: action.payload,
             };
+        case 'city/loaded':
+            return {
+                ...state,
+                isLoading: false,
+                currentCity: action.payload,
+            }
         case 'cities/created':
         case 'cities/deleted':
         case 'rejected':
@@ -69,8 +75,9 @@ function CitiesProvider({children})
 
 
     async function createCities(newCity) {
+        dispatch({type: "loading"});
         try {
-            setIsLoading(true);
+            // setIsLoading(true);
             const res = await fetch(`${BASE_URl}/cities`, {
                 method: 'POST',
                 body: JSON.stringify(newCity),
@@ -84,36 +91,42 @@ function CitiesProvider({children})
             setCities((cities) => [...cities, data])
         } catch {
             alert('There was an error saving the data')
-        } finally {
-            setIsLoading(false)
         }
+        // finally {
+        //     setIsLoading(false)
+        // }
     }
 
     async function deleteCity(id) {
+        dispatch({type: "loading"});
         try {
-            setIsLoading(true);
+            // setIsLoading(true);
             await fetch(`${BASE_URl}/cities/${id}`, {
                 method: 'DELETE',
             });
             setCities((cities) => cities.filter((city) => city.id !== id));
         } catch {
             alert('There was an error deleting the data');
-        } finally {
-            setIsLoading(false);
         }
+        // finally {
+        //     setIsLoading(false);
+        // }
     }
 
   async  function getCity(id) {
+      dispatch({type: "loading"});
         try {
-            setIsLoading(true);
+            // setIsLoading(true);
             const res = await fetch(`${BASE_URl}/cities/${id}`);
             const data = await res.json();
-            setCurrentCity(data);
+            // setCurrentCity(data);
+            dispatch({type: "city/loaded", payload: data});
         } catch {
             alert('There was an error loading the data');
-        } finally {
-            setIsLoading(false);
         }
+        // finally {
+        //     setIsLoading(false);
+        // }
     }
 
     return (
